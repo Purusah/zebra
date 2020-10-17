@@ -27,6 +27,10 @@ func (s *Segment) SetHandler(handler http.HandlerFunc) {
 	s.handler = handler
 }
 
+func (s *Segment) Match(_ string) bool {
+	return false
+}
+
 func (s *Segment) Eq(other *Segment) bool {
 	return s.name == other.name
 	// TODO Think about segments comparing
@@ -71,18 +75,11 @@ func InsertElement(root *Segment, new *Segment) *Segment {
 
 // Find relative endpoint for request url
 func FindElement(root *Segment, name string) *Segment {
-	nameRaw := []byte(name)
 	for _, s := range root.descendants {
-		// No special matching
-		if s.value == nil {
-			if s.name == name {
-				return s
-			}
-			continue
-		}
-		if s.value.Match(nameRaw) {
+		if s.Match(name) {
 			return s
 		}
+		continue
 	}
 	return nil
 }
