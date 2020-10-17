@@ -1,0 +1,10 @@
+run:
+  concurrency: 2
+  timeout: 2m
+  tests: true
+
+linters:
+  enable:
+    - unconvert
+    - maligned
+    - whitespace
