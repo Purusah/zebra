@@ -1,3 +1,5 @@
+// +build all unit
+
 package segment
 
 import (
@@ -118,7 +120,7 @@ func TestSegmentMatch(t *testing.T) {
 	_ = NewSegment("")
 }
 
-func TestFincElement(t *testing.T) {
+func TestFindElement(t *testing.T) {
 	// TODO
 	_ = NewSegment("")
 }
