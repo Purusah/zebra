@@ -15,6 +15,7 @@ type Router struct {
 	root *sg.Segment
 }
 
+// ServeHTTP
 func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	next := rt.root
 	parts := strings.Split(r.URL.Path, PathSeparator)[1:]
@@ -31,7 +32,7 @@ func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	next.Handle(w, r)
 }
 
-// Add new endpoint to router
+// Handle Add new endpoint to router
 func (rt *Router) Handle(pattern string, handlerFunc http.HandlerFunc, mw ...http.HandlerFunc) {
 	var s *sg.Segment
 	next := rt.root
@@ -54,7 +55,7 @@ func (rt *Router) Handle(pattern string, handlerFunc http.HandlerFunc, mw ...htt
 	}
 }
 
-//NewRouter construct new router instance
+// NewRouter construct new router instance
 func NewRouter() *Router {
 	return &Router{
 		root: sg.NewSegment(""),

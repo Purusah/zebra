@@ -10,6 +10,9 @@ build:
 lint:
 	docker run -t --rm -v $(shell pwd):/$(PROJECTNAME) -w /$(PROJECTNAME) golangci/golangci-lint:$(GOLINTVERSION) golangci-lint run -v
 
+fmt: build
+	docker run -it --rm -v $(shell pwd):/$(PROJECTNAME) $(PROJECTNAME):latest go fmt -x -n
+
 test: build
 	docker run -it --rm $(PROJECTNAME):latest go test -v -race -tags=all -coverprofile cp.out ./...
 

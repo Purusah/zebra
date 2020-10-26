@@ -1,3 +1,5 @@
+// Package provide tree structure to save mapping request paths to corresponding
+// handlers.
 package segment
 
 import (
@@ -7,6 +9,8 @@ import (
 	"github.com/purusah/zebra/pkg/handlers"
 )
 
+// Segment Basic structure to represent one path segment. One level segments will be
+// composed to one.
 type Segment struct {
 	descendants []*Segment
 	name        string
@@ -15,14 +19,17 @@ type Segment struct {
 	Middlewares []http.HandlerFunc // TODO Make private
 }
 
+// SetName Set segment name for full equal matching or matching with regular expressions
 func (s *Segment) SetName(name string) {
 	s.name = name
 }
 
+// SetValue Set matching segment to regular expression
 func (s *Segment) SetValue(value string) {
 	s.value = regexp.MustCompile(value)
 }
 
+// SetHandler Set handler func to path segment
 func (s *Segment) SetHandler(handler http.HandlerFunc) {
 	s.handler = handler
 }
@@ -62,7 +69,7 @@ func NewSegment(name string) *Segment {
 	}
 }
 
-// Insert new segment to handlers tree
+// InsertElement Insert new segment to handlers tree
 func InsertElement(root *Segment, new *Segment) *Segment {
 	for _, s := range root.descendants {
 		if s.Eq(new) {
@@ -73,7 +80,7 @@ func InsertElement(root *Segment, new *Segment) *Segment {
 	return new
 }
 
-// Find relative endpoint for request url
+// FindElement Find relative endpoint for request url
 func FindElement(root *Segment, name string) *Segment {
 	for _, s := range root.descendants {
 		if s.Match(name) {
