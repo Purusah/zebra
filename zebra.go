@@ -51,7 +51,7 @@ func (rt *Router) Handle(pattern string, handlerFunc http.HandlerFunc, mw ...htt
 		if i == lastIx {
 			s.SetHandler(handlerFunc)
 		}
-		sg.InsertElement(next, s)
+		next = sg.InsertElement(next, s)
 	}
 }
 

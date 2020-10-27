@@ -34,7 +34,16 @@ func (s *Segment) SetHandler(handler http.HandlerFunc) {
 	s.handler = handler
 }
 
-func (s *Segment) Match(_ string) bool {
+func (s *Segment) Match(name string) bool {
+	if s.value == nil {
+		if s.name == name {
+			return true
+		}
+		return false
+	}
+	if s.value.MatchString(name) {
+		return true
+	}
 	return false
 }
 
